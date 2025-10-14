@@ -334,40 +334,23 @@ function download() {
             mimeType = 'text/plain';
     }
 
+    // For Chrome extensions, open the full application in a new tab
     try {
-        // For Chrome extensions, use a data URL approach
-        const blob = new Blob([content], {
-            type: mimeType + ';charset=utf-8'
+        // Store the download data for the new tab to access
+        chrome.storage.local.set({
+            'downloadContent': content,
+            'downloadFilename': filename,
+            'downloadMimeType': mimeType,
+            'downloadAction': 'download'
+        }, () => {
+            chrome.tabs.create({
+                url: chrome.runtime.getURL('converter.html')
+            });
+            showStatus('Opening full application for download functionality...', 'info');
         });
-
-        // Create data URL
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const dataUrl = e.target.result;
-
-            // Use Chrome extension download API if available
-            if (chrome && chrome.downloads) {
-                chrome.downloads.download({
-                    url: dataUrl,
-                    filename: filename,
-                    saveAs: false
-                }, function(downloadId) {
-                    if (chrome.runtime.lastError) {
-                        console.error('Chrome download failed:', chrome.runtime.lastError);
-                        manualDownload(dataUrl, filename);
-                    } else {
-                        showStatus(`✅ Downloaded as ${filename}`, 'success');
-                    }
-                });
-            } else {
-                manualDownload(dataUrl, filename);
-            }
-        };
-        reader.readAsDataURL(blob);
-
     } catch (error) {
-        console.error('Download error:', error);
-        showStatus('Download failed. Please try copying the content instead.', 'error');
+        console.error('Download failed:', error);
+        showStatus('Download not available in popup. Please use the web version.', 'error');
     }
 }
 
@@ -431,42 +414,21 @@ function copyToClipboard() {
         return;
     }
 
+    // For Chrome extensions, open the full application in a new tab
     try {
-        // For Chrome extensions, use a more direct approach
-        if (chrome && chrome.scripting) {
-            // Use Chrome extension API if available
-            chrome.scripting.executeScript({
-                target: { tabId: -1 }, // Current extension popup
-                func: (text) => {
-                    navigator.clipboard.writeText(text).then(() => {
-                        return true;
-                    }).catch(() => {
-                        // Create temporary element for copying
-                        const textArea = document.createElement('textarea');
-                        textArea.value = text;
-                        textArea.style.position = 'absolute';
-                        textArea.style.left = '-9999px';
-                        document.body.appendChild(textArea);
-                        textArea.select();
-                        const success = document.execCommand('copy');
-                        document.body.removeChild(textArea);
-                        return success;
-                    });
-                },
-                args: [content]
-            }, (results) => {
-                if (results && results[0] && results[0].result) {
-                    showStatus('✅ Copied to clipboard!', 'success');
-                } else {
-                    manualCopyFallback(content);
-                }
+        // Store the content temporarily for the new tab to access
+        chrome.storage.local.set({
+            'clipboardContent': content,
+            'clipboardAction': 'copy'
+        }, () => {
+            chrome.tabs.create({
+                url: chrome.runtime.getURL('converter.html')
             });
-        } else {
-            manualCopyFallback(content);
-        }
+            showStatus('Opening full application for copy functionality...', 'info');
+        });
     } catch (error) {
-        console.error('Copy error:', error);
-        manualCopyFallback(content);
+        console.error('Copy failed:', error);
+        showStatus('Copy not available in popup. Please use the web version.', 'error');
     }
 }
 
@@ -620,59 +582,15 @@ convertBtn.addEventListener('click', convert);
 downloadBtn.addEventListener('click', download);
 copyBtn.addEventListener('click', copyToClipboard);
 uploadBtn.addEventListener('click', () => {
+    // For Chrome extensions, open a new tab with the full application
     try {
-        // For Chrome extensions, we need a completely different approach
-        if (chrome && chrome.fileSystem) {
-            // Use Chrome File System API if available
-            chrome.fileSystem.chooseEntry({
-                type: 'openFile',
-                accepts: [
-                    { description: 'Data files', extensions: ['csv', 'json', 'sql', 'txt'] }
-                ]
-            }, function(fileEntry) {
-                if (fileEntry) {
-                    fileEntry.file(function(file) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            try {
-                                const content = e.target.result;
-                                if (content && content.trim()) {
-                                    inputText.value = content;
-                                    inputText.focus();
-                                    inputText.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                    showStatus(`File "${file.name}" loaded successfully!`, 'success');
-                                } else {
-                                    showStatus('File appears to be empty.', 'error');
-                                }
-                            } catch (error) {
-                                showStatus('Error reading file content.', 'error');
-                            }
-                        };
-                        reader.onerror = function() {
-                            showStatus('Error reading file.', 'error');
-                        };
-                        reader.readAsText(file);
-                    });
-                }
-            });
-        } else {
-            // Fallback to traditional file input
-            const tempInput = document.createElement('input');
-            tempInput.type = 'file';
-            tempInput.accept = '.csv,.json,.sql,.txt';
-            tempInput.style.display = 'none';
-
-            tempInput.onchange = function(e) {
-                handleFileUpload(e);
-                document.body.removeChild(tempInput);
-            };
-
-            document.body.appendChild(tempInput);
-            tempInput.click();
-        }
+        chrome.tabs.create({
+            url: chrome.runtime.getURL('converter.html')
+        });
+        showStatus('Opening full application in new tab for file upload...', 'info');
     } catch (error) {
-        console.error('Upload failed:', error);
-        showStatus('Upload not available. Please drag and drop a file instead.', 'error');
+        console.error('Failed to open tab:', error);
+        showStatus('Please use the web version at the provided URL for full functionality.', 'error');
     }
 });
 fileInput.addEventListener('change', handleFileUpload);

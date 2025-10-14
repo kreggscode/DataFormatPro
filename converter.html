@@ -567,6 +567,62 @@
     </style>
 
     <script>
+        // Handle data from extension popup
+        if (typeof chrome !== 'undefined' && chrome.storage) {
+            chrome.storage.local.get(['clipboardContent', 'clipboardAction', 'downloadContent', 'downloadFilename', 'downloadMimeType', 'downloadAction'], function(data) {
+                if (data.clipboardContent && data.clipboardAction === 'copy') {
+                    // Auto-populate input for copy operation
+                    document.getElementById('input-text').value = data.clipboardContent;
+                    document.querySelector('[data-format="json"]').click(); // Set input to JSON
+                    document.querySelector('.format-btn[data-format="json"]').click(); // Set output to JSON
+                    showStatus('Content loaded from extension popup. Click Convert to proceed.', 'info');
+
+                    // Clear the stored data
+                    chrome.storage.local.remove(['clipboardContent', 'clipboardAction']);
+
+                } else if (data.downloadContent && data.downloadAction === 'download') {
+                    // Auto-populate and trigger download
+                    document.getElementById('input-text').value = data.downloadContent;
+                    document.querySelector('.format-btn[data-format="json"]').click(); // Set input to JSON
+                    document.querySelector('.format-btn[data-format="' + getFormatFromFilename(data.downloadFilename) + '"]').click();
+
+                    // Trigger conversion and download
+                    setTimeout(() => {
+                        convert();
+                        setTimeout(() => {
+                            if (document.getElementById('output-text').value) {
+                                downloadFromData(data.downloadFilename, data.downloadMimeType);
+                            }
+                        }, 500);
+                    }, 100);
+
+                    // Clear the stored data
+                    chrome.storage.local.remove(['downloadContent', 'downloadFilename', 'downloadMimeType', 'downloadAction']);
+                }
+            });
+        }
+
+        function getFormatFromFilename(filename) {
+            if (filename.endsWith('.json')) return 'json';
+            if (filename.endsWith('.csv')) return 'csv';
+            if (filename.endsWith('.sql')) return 'sql';
+            return 'json';
+        }
+
+        function downloadFromData(filename, mimeType) {
+            const content = document.getElementById('output-text').value;
+            const blob = new Blob([content], { type: mimeType + ';charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
         // DOM Elements
         const inputFormatBtns = document.querySelectorAll('.format-group:first-child .format-btn');
         const outputFormatBtns = document.querySelectorAll('.format-group:last-child .format-btn');

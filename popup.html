@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataFormatConverter</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background">
+        <div class="gradient-sphere sphere-1"></div>
+        <div class="gradient-sphere sphere-2"></div>
+        <div class="gradient-sphere sphere-3"></div>
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+    </div>
+
+    <div class="popup-container">
+        <!-- Header with Glass Effect -->
+        <header class="header-glass">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#764ba2;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#f093fb;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="64" cy="64" r="60" fill="url(#logoGradient)" stroke="#ffffff" stroke-width="2" opacity="0.95"/>
+                        <circle cx="64" cy="64" r="45" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.7"/>
+                        <circle cx="64" cy="64" r="35" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.6"/>
+                        <circle cx="64" cy="64" r="25" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.5"/>
+                        <circle cx="64" cy="64" r="4" fill="#ffffff" opacity="1"/>
+                    </svg>
+                </div>
+                <div class="title-section">
+                    <h1 class="main-title">DataFormat<span class="highlight">Converter</span></h1>
+                    <p class="tagline">Transform Data with Style</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Format Selection Cards -->
+        <div class="format-cards" style="display: flex; justify-content: space-between; align-items: center; gap: 15px;">
+            <div class="format-card input-card" style="flex: 1;">
+                <div class="card-header">
+                    <span class="card-icon">📥</span>
+                    <span class="card-label">Input</span>
+                </div>
+                <select id="input-type" class="format-select">
+                    <option value="csv">📊 CSV</option>
+                    <option value="json">🔧 JSON</option>
+                    <option value="sql">🗄️ SQL</option>
+                </select>
+            </div>
+
+            <div class="transform-arrow">
+                <div class="arrow-container">
+                    <div class="arrow-line"></div>
+                    <div class="arrow-head">→</div>
+                    <div class="sparkle sparkle-1"></div>
+                    <div class="sparkle sparkle-2"></div>
+                    <div class="sparkle sparkle-3"></div>
+                </div>
+            </div>
+
+            <div class="format-card output-card" style="flex: 1;">
+                <div class="card-header">
+                    <span class="card-icon">📤</span>
+                    <span class="card-label">Output</span>
+                </div>
+                <select id="output-type" class="format-select">
+                    <option value="json">🔧 JSON</option>
+                    <option value="csv">📊 CSV</option>
+                    <option value="sql">🗄️ SQL</option>
+                    <option value="beautify">✨ Beautify (JSON only)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Data Input Section -->
+        <div class="data-section">
+            <div class="input-card-glass">
+                <div class="card-glow"></div>
+                <div class="input-header">
+                    <span class="input-icon">💾</span>
+                    <span class="input-label">Data Input</span>
+                    <button id="upload-btn" class="upload-trigger">
+                        <span class="upload-icon">📁</span>
+                        Upload
+                    </button>
+                </div>
+                <textarea id="input-text" class="data-textarea" placeholder="Paste your data here or drop a file..."></textarea>
+
+                <div class="action-buttons">
+                    <button id="convert-btn" class="action-btn primary-btn">
+                        <span class="btn-icon">⚡</span>
+                        <span class="btn-text">Convert</span>
+                        <div class="btn-glow"></div>
+                    </button>
+                </div>
+
+                <input type="file" id="file-input" accept=".csv,.json,.sql,.txt" style="display: none;">
+            </div>
+
+            <!-- Output Section -->
+            <div class="output-card-glass">
+                <div class="card-glow"></div>
+                <div class="output-header">
+                    <span class="output-icon">📋</span>
+                    <span class="output-label">Converted Output</span>
+                    <div class="output-actions">
+                        <button id="copy-btn" class="output-action-btn" disabled>
+                            <span class="action-icon">📋</span>
+                        </button>
+                        <button id="download-btn" class="output-action-btn" disabled>
+                            <span class="action-icon">💾</span>
+                        </button>
+                    </div>
+                </div>
+                <textarea id="output-text" class="data-textarea output-textarea" readonly placeholder="Your converted data will appear here..."></textarea>
+            </div>
+        </div>
+
+        <!-- Status Display -->
+        <div class="status-container">
+            <div id="status" class="status-display"></div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

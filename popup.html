@@ -47,10 +47,10 @@
                 </div>
             </div>
 
-            <!-- Theme Toggle -->
             <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Dark/Light Mode">
                 <span class="theme-icon">🌙</span>
             </button>
+            <a href="https://github.com/kreggscode/DataFormatPro" class="header-link" title="View on GitHub" target="_blank">GitHub</a>
         </header>
 
         <!-- Format Selection Cards -->
@@ -60,7 +60,7 @@
                     <span class="card-icon">📥</span>
                     <span class="card-label">Input</span>
                 </div>
-                <select id="input-type" class="format-select">
+                <select id="input-type" class="format-select" title="Select input data format">
                     <option value="csv">📊 CSV</option>
                     <option value="json">🔧 JSON</option>
                     <option value="sql">🗄️ SQL</option>
@@ -82,7 +82,7 @@
                     <span class="card-icon">📤</span>
                     <span class="card-label">Output</span>
                 </div>
-                <select id="output-type" class="format-select">
+                <select id="output-type" class="format-select" title="Select output data format">
                     <option value="json">🔧 JSON</option>
                     <option value="csv">📊 CSV</option>
                     <option value="sql">🗄️ SQL</option>
@@ -98,7 +98,7 @@
                 <div class="input-header">
                     <span class="input-icon">💾</span>
                     <span class="input-label">Data Input</span>
-                    <button id="upload-btn" class="upload-trigger">
+                    <button id="upload-btn" class="upload-trigger" type="button" title="Upload a data file">
                         <span class="upload-icon">📁</span>
                         Upload
                     </button>
@@ -111,23 +111,28 @@
                         <span class="btn-text">Convert</span>
                         <div class="btn-glow"></div>
                     </button>
+                    <button id="clear-btn" class="action-btn secondary-btn" type="button">
+                        <span class="btn-icon">🧹</span>
+                        <span class="btn-text">Clear</span>
+                    </button>
                 </div>
 
-                <input type="file" id="file-input" accept=".csv,.json,.sql,.txt" style="display: none;" multiple>
+                <input type="file" id="file-input" accept=".csv,.json,.sql,.txt" class="sr-only" multiple>
             </div>
 
             <!-- Output Section -->
             <div class="output-card-glass">
                 <div class="card-glow"></div>
                 <div class="output-header">
-                    <span class="output-icon">📋</span>
                     <span class="output-label">Converted Output</span>
-                    <div class="output-actions">
-                        <button id="copy-btn" class="output-action-btn" disabled>
-                            <span class="action-icon">📋</span>
+                    <div class="output-actions" aria-label="Output actions">
+                        <button id="copy-btn" class="output-action-btn copy-action" type="button" title="Copy result to clipboard">
+                            <span class="action-icon" aria-hidden="true">📋</span>
+                            <span class="sr-only">Copy</span>
                         </button>
-                        <button id="download-btn" class="output-action-btn" disabled>
-                            <span class="action-icon">💾</span>
+                        <button id="download-btn" class="output-action-btn download-action" type="button" title="Download result as file">
+                            <span class="action-icon" aria-hidden="true">⬇️</span>
+                            <span class="sr-only">Download</span>
                         </button>
                     </div>
                 </div>

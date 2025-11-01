@@ -1,15 +1,20 @@
+document.addEventListener('DOMContentLoaded', () => {
+console.log('DOMContentLoaded fired');
 // DOM Elements
 const inputType = document.getElementById('input-type');
 const outputType = document.getElementById('output-type');
 const inputText = document.getElementById('input-text');
 const outputText = document.getElementById('output-text');
 const uploadBtn = document.getElementById('upload-btn');
+const clearBtn = document.getElementById('clear-btn');
 const convertBtn = document.getElementById('convert-btn');
 const downloadBtn = document.getElementById('download-btn');
 const copyBtn = document.getElementById('copy-btn');
 const fileInput = document.getElementById('file-input');
 const statusDiv = document.getElementById('status');
 const themeToggle = document.getElementById('theme-toggle');
+
+console.log('Elements found:', {inputType, outputType, inputText, outputText, uploadBtn, clearBtn, convertBtn, downloadBtn, copyBtn, fileInput, statusDiv, themeToggle});
 
 // Theme Toggle Functions
 function toggleTheme() {
@@ -371,23 +376,21 @@ function download() {
             mimeType = 'text/plain';
     }
 
-    // For Chrome extensions, open the full application in a new tab
     try {
-        // Store the download data for the new tab to access
-        chrome.storage.local.set({
-            'downloadContent': content,
-            'downloadFilename': filename,
-            'downloadMimeType': mimeType,
-            'downloadAction': 'download'
-        }, () => {
-            chrome.tabs.create({
-                url: chrome.runtime.getURL('converter.html')
-            });
-            showStatus('Opening full application for download functionality...', 'info');
+        const blob = new Blob([content], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        chrome.downloads.download({ url: url, filename: filename }, (downloadId) => {
+            if (chrome.runtime.lastError) {
+                console.error('Download failed:', chrome.runtime.lastError);
+                showStatus('Download failed. Please try again.', 'error');
+            } else {
+                showStatus(`✅ Downloaded as ${filename}`, 'success');
+            }
+            URL.revokeObjectURL(url);
         });
     } catch (error) {
         console.error('Download failed:', error);
-        showStatus('Download not available in popup. Please use the web version.', 'error');
+        showStatus('Download failed. Please try again.', 'error');
     }
 }
 
@@ -444,28 +447,23 @@ function fallbackDownload(url, filename) {
     }
 }
 
-function copyToClipboard() {
+async function copyToClipboard() {
     const content = outputText.value;
     if (!content || !content.trim()) {
         showStatus('No content to copy.', 'error');
         return;
     }
 
-    // For Chrome extensions, open the full application in a new tab
     try {
-        // Store the content temporarily for the new tab to access
-        chrome.storage.local.set({
-            'clipboardContent': content,
-            'clipboardAction': 'copy'
-        }, () => {
-            chrome.tabs.create({
-                url: chrome.runtime.getURL('converter.html')
-            });
-            showStatus('Opening full application for copy functionality...', 'info');
-        });
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(content);
+            showStatus('✅ Copied to clipboard!', 'success');
+        } else {
+            fallbackCopyTextToClipboard(content);
+        }
     } catch (error) {
-        console.error('Copy failed:', error);
-        showStatus('Copy not available in popup. Please use the web version.', 'error');
+        console.error('Clipboard API failed:', error);
+        fallbackCopyTextToClipboard(content);
     }
 }
 
@@ -615,22 +613,46 @@ function handleDrop(e) {
 }
 
 // Event Listeners
-convertBtn.addEventListener('click', convert);
-downloadBtn.addEventListener('click', download);
-copyBtn.addEventListener('click', copyToClipboard);
-uploadBtn.addEventListener('click', () => {
-    // For Chrome extensions, open a new tab with the full application
-    try {
-        chrome.tabs.create({
-            url: chrome.runtime.getURL('converter.html')
-        });
-        showStatus('Opening full application in new tab for file upload...', 'info');
-    } catch (error) {
-        console.error('Failed to open tab:', error);
-        showStatus('Please use the web version at the provided URL for full functionality.', 'error');
+convertBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('convert clicked');
+    convert();
+});
+downloadBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('download clicked');
+    download();
+});
+copyBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('copy clicked');
+    copyToClipboard();
+});
+uploadBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('upload clicked');
+    if (!fileInput) {
+        showStatus('File upload is unavailable.', 'error');
+        return;
     }
+
+    // Reset the value so selecting the same file twice still triggers change
+    fileInput.value = '';
+    fileInput.click();
+    showStatus('Choose a file to upload. We\'ll load the content here.', 'info');
 });
 fileInput.addEventListener('change', handleFileUpload);
+
+clearBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('clear clicked');
+    inputText.value = '';
+    outputText.value = '';
+    fileInput.value = '';
+    downloadBtn.disabled = true;
+    copyBtn.disabled = true;
+    showStatus('Cleared the input and output areas.', 'info');
+});
 
 // Drag and drop listeners
 inputText.addEventListener('dragover', handleDragOver);
@@ -671,3 +693,5 @@ loadThemePreference();
 
 // Theme toggle event listener
 themeToggle.addEventListener('click', toggleTheme);
+
+});

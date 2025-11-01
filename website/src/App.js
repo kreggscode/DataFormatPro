@@ -351,8 +351,23 @@ function Converter() {
       <header className="hero">
         <div className="hero-content">
           <h1 className="hero-title">
-            <span className="hero-icon">🔄</span>
-            DataFormatConverter
+            <div className="hero-icon">
+              <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#667eea" stopOpacity={1} />
+                    <stop offset="50%" stopColor="#764ba2" stopOpacity={1} />
+                    <stop offset="100%" stopColor="#f093fb" stopOpacity={1} />
+                  </linearGradient>
+                </defs>
+                <circle cx="64" cy="64" r="60" fill="url(#logoGradient)" stroke="#ffffff" strokeWidth="2" opacity="0.95"/>
+                <circle cx="64" cy="64" r="45" fill="none" stroke="#ffffff" strokeWidth="1.5" opacity="0.7"/>
+                <circle cx="64" cy="64" r="35" fill="none" stroke="#ffffff" strokeWidth="1.5" opacity="0.6"/>
+                <circle cx="64" cy="64" r="25" fill="none" stroke="#ffffff" strokeWidth="1.5" opacity="0.5"/>
+                <circle cx="64" cy="64" r="4" fill="#ffffff" opacity="1"/>
+              </svg>
+            </div>
+            DataMorph<span className="highlight">Pro</span>
           </h1>
           <p className="hero-subtitle">
             Convert between CSV, JSON, and SQL formats with stunning ease
@@ -513,7 +528,7 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <p>&copy; 2025 DataFormatConverter. All rights reserved.</p>
+        <p>&copy; 2025 DataMorphPro. All rights reserved.</p>
         <div className="footer-links">
           <Link to="/about">About</Link>
           <Link to="/privacy">Privacy Policy</Link>

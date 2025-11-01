@@ -1,4 +1,4 @@
-# 🔄 DataFormatConverter
+# 🔄 DataFormatPro
 
 <div align="center">
 
@@ -6,14 +6,14 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blueviolet.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 [![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chrome.google.com/webstore)
-[![Live Demo](https://img.shields.io/badge/Live-Demo-FF1493?style=for-the-badge&logo=vercel&logoColor=white)](https://kreggscode.github.io/DataFormatConverter)
-[![GitHub Stars](https://img.shields.io/github/stars/kreggscode/DataFormatConverter?style=for-the-badge&logo=github)](https://github.com/kreggscode/DataFormatConverter)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-FF1493?style=for-the-badge&logo=vercel&logoColor=white)](https://kreggscode.github.io/DataFormatPro)
+[![GitHub Stars](https://img.shields.io/github/stars/kreggscode/DataFormatPro?style=for-the-badge&logo=github)](https://github.com/kreggscode/DataFormatPro)
 
 **A beautiful, privacy-first tool for converting between CSV, JSON, and SQL formats**
 
 *Built with modern web technologies • Lightning fast • Visually stunning*
 
-[🚀 Live Demo](https://kreggscode.github.io/DataFormatConverter) • [📦 Chrome Extension](https://chrome.google.com/webstore) • [📖 Documentation](https://github.com/kreggscode/DataFormatConverter/wiki)
+[🚀 Live Demo](https://kreggscode.github.io/DataFormatPro) • [📦 Chrome Extension](https://chrome.google.com/webstore) • [📖 Documentation](https://github.com/kreggscode/DataFormatPro/wiki)
 
 </div>
 
@@ -79,7 +79,7 @@
 
 No installation needed! Just visit:
 
-👉 **[kreggscode.github.io/DataFormatConverter](https://kreggscode.github.io/DataFormatConverter)**
+👉 **[kreggscode.github.io/DataFormatPro](https://kreggscode.github.io/DataFormatPro)**
 
 Works in any modern browser:
 - ✅ Chrome
@@ -149,8 +149,8 @@ Copy to clipboard OR download file
 ### Local Development
 ```bash
 # Clone the repository
-git clone https://github.com/kreggscode/DataFormatConverter.git
-cd DataFormatConverter
+git clone https://github.com/kreggscode/DataFormatPro.git
+cd DataFormatPro
 
 # Install dependencies
 npm install
@@ -209,12 +209,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/kreggscode/DataFormatConverter/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/kreggscode/DataFormatConverter/discussions)
+- **Issues**: [GitHub Issues](https://github.com/kreggscode/DataFormatPro/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/kreggscode/DataFormatPro/discussions)
 - **Email**: support@dataformatconverter.com
 
 ---
 
 **Made with ❤️ for developers, by developers**
 
-[🌟 Star us on GitHub](https://github.com/kreggscode/DataFormatConverter) • [📖 Documentation](https://github.com/kreggscode/DataFormatConverter/wiki) • [🎯 Live Demo](https://dataformatconverter.netlify.app)
+[🌟 Star us on GitHub](https://github.com/kreggscode/DataFormatPro) • [📖 Documentation](https://github.com/kreggscode/DataFormatPro/wiki) • [🎯 Live Demo](https://kreggscode.github.io/DataFormatPro)

@@ -21,8 +21,26 @@
     transform: scale(0.95);
 }
 
-.theme-icon {
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+.header-link {
+    position: relative;
+    margin-left: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.header-link:hover {
+    color: #ffffff;
+}
+
+body.light-theme .header-link {
+    color: rgba(45, 55, 72, 0.7);
+}
+
+body.light-theme .header-link:hover {
+    color: #2d3748;
 }
 
 /* LIGHT THEME STYLES */
@@ -86,7 +104,33 @@ body.light-theme .output-action-btn {
 
 body.light-theme .upload-trigger:hover,
 body.light-theme .output-action-btn:hover {
-    background: rgba(0, 0, 0, 0.05);
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: #ffffff;
+}
+
+.action-btn.secondary-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e2e8f0;
+    padding: 10px 20px;
+    font-size: 12px;
+}
+
+.action-btn.secondary-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.35);
+}
+
+.action-btn.secondary-btn:active {
+    transform: translateY(0);
+}
+
+.action-btn.secondary-btn .btn-glow {
+    display: none;
+}
+
+.action-btn.secondary-btn .btn-icon {
+    color: #93c5fd;
 }
 
 body.light-theme .action-btn.primary-btn {
@@ -97,6 +141,20 @@ body.light-theme .action-btn.primary-btn {
 body.light-theme .action-btn.primary-btn:hover {
     background: linear-gradient(45deg, #5a67d8, #6b46c1);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+body.light-theme .action-btn.secondary-btn {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    color: #2d3748;
+}
+
+body.light-theme .action-btn.secondary-btn:hover {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+body.light-theme .action-btn.secondary-btn .btn-icon {
+    color: #3182ce;
 }
 
 body.light-theme .status-display {
@@ -547,6 +605,8 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
+    position: relative;
+    z-index: 20;
 }
 
 .upload-trigger:hover {
@@ -612,6 +672,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 1px;
     box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    z-index: 20;
 }
 
 .action-btn:hover {
@@ -646,6 +707,18 @@ body {
     flex-shrink: 0;
 }
 
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 .output-action-btn {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -661,6 +734,30 @@ body {
     min-height: 36px;
     font-size: 12px;
     flex-shrink: 0;
+    position: relative;
+    z-index: 20;
+}
+
+.output-action-btn.copy-action {
+    background: rgba(102, 126, 234, 0.18);
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+.output-action-btn.copy-action:hover:not(:disabled) {
+    background: rgba(102, 126, 234, 0.28);
+    border-color: rgba(102, 126, 234, 0.45);
+    transform: translateY(-1px);
+}
+
+.output-action-btn.download-action {
+    background: rgba(72, 187, 120, 0.18);
+    border-color: rgba(72, 187, 120, 0.3);
+}
+
+.output-action-btn.download-action:hover:not(:disabled) {
+    background: rgba(72, 187, 120, 0.28);
+    border-color: rgba(72, 187, 120, 0.45);
+    transform: translateY(-1px);
 }
 
 .output-action-btn:hover:not(:disabled) {

@@ -8,7 +8,7 @@ function About() {
       <div className="about-container">
         <header className="about-header">
           <Link to="/" className="back-link">← Back to Converter</Link>
-          <h1>About DataFormatConverter</h1>
+          <h1>About DataMorphPro</h1>
           <p className="about-tagline">Transform your data with ease and precision</p>
         </header>
 
@@ -37,7 +37,7 @@ function About() {
             </div>
             <h2>What We Do</h2>
             <p>
-              DataFormatConverter is your ultimate tool for seamlessly converting between different data formats.
+              DataMorphPro is your ultimate tool for seamlessly converting between different data formats.
               Whether you're working with CSV files, JSON structures, or SQL databases, we make data transformation
               simple, fast, and reliable.
             </p>
@@ -136,7 +136,7 @@ function About() {
         <section className="about-section">
           <h2>Browser Extension</h2>
           <p>
-            DataFormatConverter is also available as a Chrome browser extension for even faster access.
+            DataMorphPro is also available as a Chrome browser extension for even faster access.
             Install it from the Chrome Web Store and convert data directly from any webpage.
           </p>
           <div className="extension-features">

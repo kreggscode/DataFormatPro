@@ -66,8 +66,25 @@ body {
 }
 
 .hero-icon {
-  font-size: 4rem;
+  width: 80px;
+  height: 80px;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: logoPulse 3s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.highlight {
+  background: linear-gradient(45deg, #7c8ff0, #9b7ce6, #ff9cfb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .hero-subtitle {
